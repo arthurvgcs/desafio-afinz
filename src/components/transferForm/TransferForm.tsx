@@ -1,22 +1,14 @@
+import { useTransferContext } from '../../context/TransferContext';
 import styles from './TransferForm.module.css';
 
-interface Props {
-  transferType: string;
-  setTransferType: (value: string) => void;
-  agency: string;
-  setAgency: (value: string) => void;
-  account: string;
-  setAccount: (value: string) => void;
-  amount: string;
-  setAmount: (value: string) => void;
-}
+export default function TransferForm() {
+  const {
+    transferType, setTransferType,
+    agency, setAgency,
+    account, setAccount,
+    amount, setAmount,
+  } = useTransferContext();
 
-export default function TransferForm({
-  transferType, setTransferType,
-  agency, setAgency,
-  account, setAccount,
-  amount, setAmount
-}: Props) {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log('Transferência realizada:', { transferType, agency, account, amount });

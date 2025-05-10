@@ -1,14 +1,15 @@
+import { useBalanceContext } from '../../context/BalanceContext';
 import EyeIcon from '../../icons/EyeIcon.tsx';
 import EyeOffIcon from '../../icons/EyeOffIcon.tsx';
 import styles from './BalanceCard.module.css';
 
 interface Props {
-  balanceVisible: boolean;
-  toggleBalanceVisibility: () => void;
   formattedDate: string;
 }
 
-export default function BalanceCard({ balanceVisible, toggleBalanceVisibility, formattedDate }: Props) {
+export default function BalanceCard({ formattedDate }: Props) {
+  const { balanceVisible, toggleBalanceVisibility } = useBalanceContext();
+
   return (
     <div className={styles.balanceCard}>
       <div className={styles.balanceHeader}>
@@ -28,7 +29,7 @@ export default function BalanceCard({ balanceVisible, toggleBalanceVisibility, f
         </div>
         <div className={styles.agencyInfo}>
           <span className={styles.infoLabel}>Conta</span>
-          <span className={styles.infoValue}>{'{Agência}'}</span>
+          <span className={styles.infoValue}>{'{Conta}'}</span>
         </div>
       </div>
     </div>
