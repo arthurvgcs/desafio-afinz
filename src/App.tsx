@@ -9,6 +9,10 @@ import IncreasingIcon from './icons/IncreasingIcon.tsx';
 import MoveUpDownIcon from './icons/MoveUpDownIcon.tsx';
 
 export default function App() {
+  const [transferType, setTransferType] = useState('TED (Transferência entre contas)');
+  const [agency, setAgency] = useState('');
+  const [account, setAccount] = useState('');
+  const [amount, setAmount] = useState('');
   const [balanceVisible, setBalanceVisible] = useState(true);
   const [activeTab, setActiveTab] = useState('saldo');
 
@@ -69,36 +73,153 @@ export default function App() {
             Transferir
           </div>
         </div>
-        <div className={styles.welcomeSection}>
-          <h1 className={styles.greeting}>Bom dia, {'{Nome}'}</h1>
-          <p className={styles.subGreeting}>Veja como anda a saúde da sua conta bancária</p>
-        </div>
-        <div className={styles.balanceCard}>
-          <div className={styles.balanceHeader}>
-            <span className={styles.balanceLabel}>Saldo em conta</span>
-            <button className={styles.visibilityToggle} onClick={toggleBalanceVisibility}>
-              {balanceVisible ? <EyeOffIcon size={20} /> : <EyeIcon size={20} />}
-            </button>
-          </div>
-          <div className={styles.balanceAmount}>
-            {balanceVisible ? 'R$ {VALOR}' : 'R$ ••••••'}
-          </div>
-          
-          <div className={styles.balanceUpdateInfo}>
-            Atualizado em: {formattedDate}
-          </div>
+        {activeTab === 'saldo' && (
+          <>
+            <div className={styles.welcomeSection}>
+              <h1 className={styles.greeting}>Bom dia, {'{Nome}'}</h1>
+              <p className={styles.subGreeting}>Veja como anda a saúde da sua conta bancária</p>
+            </div>
+            <div className={styles.balanceCard}>
+              <div className={styles.balanceHeader}>
+                <span className={styles.balanceLabel}>Saldo em conta</span>
+                <button className={styles.visibilityToggle} onClick={toggleBalanceVisibility}>
+                  {balanceVisible ? <EyeOffIcon size={20} /> : <EyeIcon size={20} />}
+                </button>
+              </div>
+              <div className={styles.balanceAmount}>
+                {balanceVisible ? 'R$ {VALOR}' : 'R$ ••••••'}
+              </div>
+              
+              <div className={styles.balanceUpdateInfo}>
+                Atualizado em: {formattedDate}
+              </div>
 
-          <div className={styles.accountInfo}>
-            <div className={styles.agencyInfo}>
-              <span className={styles.infoLabel}>Agência</span>
-              <span className={styles.infoValue}>{'{Agência}'}</span>
+              <div className={styles.accountInfo}>
+                <div className={styles.agencyInfo}>
+                  <span className={styles.infoLabel}>Agência</span>
+                  <span className={styles.infoValue}>{'{Agência}'}</span>
+                </div>
+                <div className={styles.agencyInfo}>
+                  <span className={styles.infoLabel}>Conta</span>
+                  <span className={styles.infoValue}>{'{Agência}'}</span>
+                </div>
+              </div>
             </div>
-            <div className={styles.agencyInfo}>
-              <span className={styles.infoLabel}>Conta</span>
-              <span className={styles.infoValue}>{'{Agência}'}</span>
+        </>
+          )}
+        {activeTab === 'transferir' && (
+          <>
+            <div className={styles.welcomeSection}>
+              <h1 className={styles.greeting}>Área de transferência</h1>
+              <p className={styles.subGreeting}>Preencha os dados para realizar sua transferência entre contas.</p>
             </div>
-          </div>
-        </div>
+            <div className={styles.flexContainer}>
+              <div className={styles.cardContainer}>
+                <div className={styles.cardHeader}>
+                  <h2 className={styles.cardTitle}>Dados da transferência</h2>
+                </div>
+                
+                <form className={styles.transferForm} onSubmit={(e) => {
+                  e.preventDefault();
+                  console.log('Transferência realizada:', { transferType, agency, account, amount });
+                }}>
+                  <div className={styles.formGroup}>
+                    <label htmlFor="transferType" className={styles.label}>
+                      Tipo de transferência
+                    </label>
+                    <div className={styles.selectWrapper}>
+                      <select 
+                        id="transferType"
+                        className={styles.select}
+                        value={transferType}
+                        onChange={(e) => setTransferType(e.target.value)}
+                        disabled
+                      >
+                        <option value="TED (Transferência entre contas)">TED (Transferência entre contas)</option>
+                        <option value="PIX">PIX</option>
+                        <option value="DOC">DOC</option>
+                      </select>
+                    </div>
+                  </div>
+                  
+                  <div className={styles.formGroup}>
+                    <label htmlFor="agency" className={styles.label}>
+                      Agência
+                    </label>
+                    <input
+                      type="text"
+                      id="agency"
+                      className={styles.input}
+                      value={agency}
+                      onChange={(e) => setAgency(e.target.value)}
+                      placeholder=""
+                    />
+                  </div>
+                  
+                  <div className={styles.formGroup}>
+                    <label htmlFor="account" className={styles.label}>
+                      Conta
+                    </label>
+                    <input
+                      type="text"
+                      id="account"
+                      className={styles.input}
+                      value={account}
+                      onChange={(e) => setAccount(e.target.value)}
+                      placeholder=""
+                    />
+                  </div>
+                  
+                  <div className={styles.formGroup}>
+                    <label htmlFor="amount" className={styles.label}>
+                      Valor
+                    </label>
+                    <input
+                      type="text"
+                      id="amount"
+                      className={styles.input}
+                      value={amount}
+                      onChange={(e) => setAmount(e.target.value)}
+                      placeholder=""
+                    />
+                  </div>
+                  
+                  <div className={styles.formActions}>
+                    <button type="submit" className={styles.transferButton}>
+                      Transferir
+                    </button>
+                  </div>
+                </form>
+              </div>
+              <div className={styles.balanceCard}>
+                <div className={styles.balanceHeader}>
+                  <span className={styles.balanceLabel}>Saldo em conta</span>
+                  <button className={styles.visibilityToggle} onClick={toggleBalanceVisibility}>
+                    {balanceVisible ? <EyeOffIcon size={20} /> : <EyeIcon size={20} />}
+                  </button>
+                </div>
+                <div className={styles.balanceAmount}>
+                  {balanceVisible ? 'R$ {VALOR}' : 'R$ ••••••'}
+                </div>
+                
+                <div className={styles.balanceUpdateInfo}>
+                  Atualizado em: {formattedDate}
+                </div>
+
+                <div className={styles.accountInfo}>
+                  <div className={styles.agencyInfo}>
+                    <span className={styles.infoLabel}>Agência</span>
+                    <span className={styles.infoValue}>{'{Agência}'}</span>
+                  </div>
+                  <div className={styles.agencyInfo}>
+                    <span className={styles.infoLabel}>Conta</span>
+                    <span className={styles.infoValue}>{'{Agência}'}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
