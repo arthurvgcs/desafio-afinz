@@ -1,0 +1,91 @@
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  z-index: 1000;
+}
+
+.modalContent {
+   background-color: #fff;
+    width: 400px;
+    height: 100%;
+    padding: 24px;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+    animation: slideIn 0.3s ease-out forwards;
+    z-index: 9999;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: flex-start;
+  padding: 10px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #666;
+  padding: 5px;
+}
+
+.receiptContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.balanceSection {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.balanceLabel {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 8px;
+}
+
+.balanceValue {
+  font-size: 26px;
+  font-weight: 600;
+  color: #000;
+}
+
+
+.infoGrid {
+  display: flex;
+  flex-direction: column;
+}
+
+.infoRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #f5f5f5;
+}
+
+.infoLabel {
+  font-size: 14px;
+  font-weight: 500;
+  color: #000000;
+}
+
+.infoValue {
+  font-size: 14px;
+  font-weight: 500;
+  color:#B5B5B5;
+  text-align: right;
+}

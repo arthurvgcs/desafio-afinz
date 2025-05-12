@@ -1,17 +1,61 @@
+import { useBalanceContext } from '../../context/BalanceContext';
 import { useTransferContext } from '../../context/TransferContext';
+import { createAccountService } from '../../service/accountService';
+import { axiosHttpClient } from '../../service/axiosHttpClient';
+import { createTransferService } from '../../service/transferService';
+import ReceiptDrawer from '../receipt/ReceiptDrawer';
 import styles from './TransferForm.module.css';
 
 export default function TransferForm() {
   const {
     transferType, setTransferType,
-    agency, setAgency,
-    account, setAccount,
+    agencyTransfer, setAgencyTransfer,
+    accountTransfer, setAccountTransfer,
     amount, setAmount,
+    isModalOpen, setIsModalOpen,
+    receiptData, setReceiptData,
   } = useTransferContext();
+  const {
+    agency,
+    account,
+  } = useBalanceContext();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Transferência realizada:', { transferType, agency, account, amount });
+
+    try {
+      const accountService = createAccountService(axiosHttpClient);
+      const accountResponse = await accountService.consultAgencyAndAccount(Number(agencyTransfer),
+        Number(accountTransfer)
+      );
+      console.log("Conta e agência válidas:", accountResponse);
+      const transferService = createTransferService(axiosHttpClient);
+      const transferResponse = await transferService.transfer({
+        value: Number(amount),
+        agency: Number(agencyTransfer),
+        account: Number(accountTransfer),
+      });
+
+      const now = new Date();
+      setReceiptData({
+        newBalance: transferResponse.value,
+        status: transferResponse.status,
+        date: now.toLocaleDateString(),
+        time: now.toLocaleTimeString(),
+        agency: agencyTransfer,
+        account: accountTransfer,
+        amount,
+        sourceAccount: account,
+        sourceAgency: agency,        
+      });
+      setIsModalOpen(true);
+    } catch (error: any) {
+      console.error(
+        "Erro:",
+        error.response?.data?.message || "Erro ao validar conta ou transferir"
+      );
+      alert(error.response?.data?.message || "Conta inválida ou erro na transferência.");
+    }
   };
 
   return (
@@ -33,13 +77,13 @@ export default function TransferForm() {
         </div>
         <div className={styles.formGroup}>
           <label htmlFor="agency" className={styles.label}>Agência</label>
-          <input type="text" id="agency" className={styles.input} value={agency}
-            onChange={(e) => setAgency(e.target.value)} />
+          <input type="text" id="agency" className={styles.input} value={agencyTransfer}
+            onChange={(e) => setAgencyTransfer(e.target.value)} />
         </div>
         <div className={styles.formGroup}>
           <label htmlFor="account" className={styles.label}>Conta</label>
-          <input type="text" id="account" className={styles.input} value={account}
-            onChange={(e) => setAccount(e.target.value)} />
+          <input type="text" id="account" className={styles.input} value={accountTransfer}
+            onChange={(e) => setAccountTransfer(e.target.value)} />
         </div>
         <div className={styles.formGroup}>
           <label htmlFor="amount" className={styles.label}>Valor</label>
@@ -50,6 +94,11 @@ export default function TransferForm() {
           <button type="submit" className={styles.transferButton}>Transferir</button>
         </div>
       </form>
+      <ReceiptDrawer
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        receiptData={receiptData}
+      />
     </div>
   );
 }

@@ -1,0 +1,85 @@
+import React from 'react';
+import CloseIcon from '../../icons/CloseIcon';
+import styles from './ReceiptDrawer.module.css';
+
+interface ReceiptModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  receiptData: {
+    newBalance: string;
+    status: string;
+    date: string;
+    time: string;
+    agency: string;
+    account: string;
+    amount: string;
+    sourceAccount: string;
+    sourceAgency: string;
+  };
+}
+
+const ReceiptModal: React.FC<ReceiptModalProps> = ({ 
+  isOpen, 
+  onClose, 
+  receiptData 
+}) => {
+  if (!isOpen) return null;
+
+  return (
+    <div className={styles.modalOverlay}>
+      <div className={styles.modalContent}>
+        <div className={styles.modalHeader}>
+          <button className={styles.closeButton} onClick={onClose}>
+            <CloseIcon size={20} />
+          </button>
+        </div>
+        
+        <div className={styles.receiptContent}>
+          <div className={styles.balanceSection}>
+            <div className={styles.balanceLabel}>Novo Saldo</div>
+            <div className={styles.balanceValue}>R$ {receiptData.newBalance}</div>
+          </div>
+          
+          <div className={styles.infoGrid}>
+            <div className={styles.infoRow}>
+              <div className={styles.infoLabel}>Status</div>
+              <div className={styles.infoValue}>{receiptData.status}</div>
+            </div>
+            
+            <div className={styles.infoRow}>
+              <div className={styles.infoLabel}>Data - Hora</div>
+              <div className={styles.infoValue}>{receiptData.date} - {receiptData.time}</div>
+            </div>
+            
+            <div className={styles.infoRow}>
+              <div className={styles.infoLabel}>Agência</div>
+              <div className={styles.infoValue}>{receiptData.agency}</div>
+            </div>
+            
+            <div className={styles.infoRow}>
+              <div className={styles.infoLabel}>Conta</div>
+              <div className={styles.infoValue}>{receiptData.account}</div>
+            </div>
+            
+            <div className={styles.infoRow}>
+              <div className={styles.infoLabel}>Valor</div>
+              <div className={styles.infoValue}>R$ {receiptData.amount}</div>
+            </div>
+            
+            <div className={styles.infoRow}>
+              <div className={styles.infoLabel}>Sua conta</div>
+              <div className={styles.infoValue}>{receiptData.sourceAccount}</div>
+            </div>
+            
+            <div className={styles.infoRow}>
+              <div className={styles.infoLabel}>Sua agência</div>
+              <div className={styles.infoValue}>{receiptData.sourceAgency}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ReceiptModal;
