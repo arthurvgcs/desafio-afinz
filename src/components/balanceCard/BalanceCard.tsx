@@ -1,6 +1,7 @@
 import { useBalanceContext } from '../../context/BalanceContext';
 import EyeIcon from '../../icons/EyeIcon.tsx';
 import EyeOffIcon from '../../icons/EyeOffIcon.tsx';
+import { formatCurrencyFromCents } from '../../utils/formatCurrency.ts';
 import styles from './BalanceCard.module.css';
 
 interface Props {
@@ -19,7 +20,7 @@ export default function BalanceCard({ formattedDate }: Props) {
         </button>
       </div>
       <div className={styles.balanceAmount}>
-        {balanceVisible ? `R$ ${balance}` : 'R$ ••••••'}
+        {balanceVisible ? formatCurrencyFromCents(balance) : 'R$ ••••••'}
       </div>
       <div className={styles.balanceUpdateInfo}>Atualizado em: {formattedDate}</div>
       <div className={styles.accountInfo}>
