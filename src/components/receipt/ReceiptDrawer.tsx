@@ -1,5 +1,8 @@
 import React from 'react';
 import CloseIcon from '../../icons/CloseIcon';
+import TransferApprovedIcon from '../../icons/TransferApprovedIcon';
+import TransferProcessingIcon from '../../icons/TransferProcessingIcon';
+import { formatCurrencyFromCents } from '../../utils/formatCurrency';
 import styles from './ReceiptDrawer.module.css';
 
 interface ReceiptModalProps {
@@ -33,17 +36,31 @@ const ReceiptModal: React.FC<ReceiptModalProps> = ({
             <CloseIcon size={20} />
           </button>
         </div>
+
+        <div className={styles.statusRow}>
+          {receiptData.status === 'APPROVED' ? (
+            <div className={styles.statusAccepted}>
+              <TransferApprovedIcon />
+              <span className={styles.statusText}>Transferência realizada</span>
+            </div>
+          ) : (
+            <div className={styles.statusProcessing}>
+              <TransferProcessingIcon />
+              <span className={styles.statusText}>Transferência em processamento</span>
+            </div>
+          )}
+        </div>
         
         <div className={styles.receiptContent}>
-          <div className={styles.balanceSection}>
+          {/* <div className={styles.balanceSection}>
             <div className={styles.balanceLabel}>Novo Saldo</div>
             <div className={styles.balanceValue}>R$ {receiptData.newBalance}</div>
-          </div>
+          </div> */}
           
           <div className={styles.infoGrid}>
             <div className={styles.infoRow}>
-              <div className={styles.infoLabel}>Status</div>
-              <div className={styles.infoValue}>{receiptData.status}</div>
+              <div className={styles.infoLabel}>Novo Saldo</div>
+              <div className={styles.infoValue}>{formatCurrencyFromCents(Number(receiptData.newBalance))}</div>
             </div>
             
             <div className={styles.infoRow}>
@@ -63,7 +80,7 @@ const ReceiptModal: React.FC<ReceiptModalProps> = ({
             
             <div className={styles.infoRow}>
               <div className={styles.infoLabel}>Valor</div>
-              <div className={styles.infoValue}>R$ {receiptData.amount}</div>
+              <div className={styles.infoValue}>{formatCurrencyFromCents(Number(receiptData.amount))}</div>
             </div>
             
             <div className={styles.infoRow}>

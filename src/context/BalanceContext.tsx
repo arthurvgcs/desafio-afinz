@@ -11,6 +11,7 @@ interface BalanceContextType {
   account: number;
   balance: number;
   toggleBalanceVisibility: () => void;
+  setBalance: (value: number) => void;
 }
 
 const BalanceContext = createContext<BalanceContextType | undefined>(undefined);
@@ -66,7 +67,7 @@ export const BalanceProvider = ({ children }: { children: ReactNode }) => {
   const toggleBalanceVisibility = () => setBalanceVisible(!balanceVisible);
 
   return (
-    <BalanceContext.Provider value={{ balanceVisible, agency, name, balance, account, toggleBalanceVisibility }}>
+    <BalanceContext.Provider value={{ balanceVisible, agency, name, balance, account, toggleBalanceVisibility, setBalance }}>
       {children}
     </BalanceContext.Provider>
   );

@@ -28,6 +28,7 @@ export default function TransferForm() {
     agency,
     account,
     balance,
+    setBalance
   } = useBalanceContext();
   const [isLoading, setIsLoading] = useState(false);
   const handleSubmit = async (e: React.FormEvent) => {
@@ -45,10 +46,11 @@ export default function TransferForm() {
         agency: Number(agencyTransfer),
         account: Number(accountTransfer),
       });
+      setBalance(balance - Number(amount));
 
       const now = new Date();
       setReceiptData({
-        newBalance: transferResponse.value,
+        newBalance: balance - Number(amount),
         status: transferResponse.status,
         date: now.toLocaleDateString(),
         time: now.toLocaleTimeString(),
@@ -60,6 +62,11 @@ export default function TransferForm() {
       });
       setIsModalOpen(true);
     } catch (error: any) {
+      if (error.response?.status === 500) {
+        setErrorMessage("Erro interno do servidor, tente novamente mais tarde")
+        setIsError(true);
+        return;
+      }
       setErrorMessage(
         error.response?.data?.message || "Erro ao validar conta ou transferir"
       );
@@ -81,15 +88,11 @@ export default function TransferForm() {
     }
   };
 
-  // Validate account input - only numbers and 4 or 5 digits
   const handleAccountChange = (e:any) => {
     const value = e.target.value;
-    
-    // Allow only numbers
+
     if (value === '' || /^\d+$/.test(value)) {
       setAccountTransfer(value);
-      
-      // Validate length
       if (value.length > 0 && (value.length < 4 || value.length > 5)) {
         setAccountError('A conta deve ter 4 ou 5 dígitos');
       } else {
@@ -99,7 +102,7 @@ export default function TransferForm() {
   };
 
   const handleAmountChange = (e:any) => {
-    const rawValue = e.target.value.replace(/\D/g, ''); // remove tudo que não é número
+    const rawValue = e.target.value.replace(/\D/g, '');
     const numericValue = parseInt(rawValue || '0', 10);
     if(numericValue > balance) {
       setAmountError('Valor maior que o saldo disponível');
