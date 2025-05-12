@@ -3,6 +3,7 @@ import { useTransferContext } from '../../context/TransferContext';
 import { createAccountService } from '../../service/accountService';
 import { axiosHttpClient } from '../../service/axiosHttpClient';
 import { createTransferService } from '../../service/transferService';
+import ErrorModal from '../error/ErrorModal';
 import ReceiptDrawer from '../receipt/ReceiptDrawer';
 import styles from './TransferForm.module.css';
 
@@ -14,6 +15,7 @@ export default function TransferForm() {
     amount, setAmount,
     isModalOpen, setIsModalOpen,
     receiptData, setReceiptData,
+    isError, setIsError,
   } = useTransferContext();
   const {
     agency,
@@ -54,11 +56,13 @@ export default function TransferForm() {
         "Erro:",
         error.response?.data?.message || "Erro ao validar conta ou transferir"
       );
-      alert(error.response?.data?.message || "Conta inválida ou erro na transferência.");
+      setIsError(true);
     }
   };
 
   return (
+    <>
+    <ErrorModal isOpen={isError} message="Erro ao validar conta ou transferir" onClose={() => setIsError(false)} />
     <div className={styles.cardContainer}>
       <div className={styles.cardHeader}>
         <h2 className={styles.cardTitle}>Dados da transferência</h2>
@@ -100,5 +104,6 @@ export default function TransferForm() {
         receiptData={receiptData}
       />
     </div>
+    </>
   );
 }

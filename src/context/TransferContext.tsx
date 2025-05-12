@@ -14,6 +14,8 @@ interface TransferContextType {
   setIsModalOpen: (value: boolean) => void;
   receiptData: any;
   setReceiptData: (value: any) => void;
+  isError: boolean;
+  setIsError: (value: boolean) => void;
 }
 
 const TransferContext = createContext<TransferContextType | undefined>(undefined);
@@ -24,6 +26,7 @@ export const TransferProvider = ({ children }: { children: ReactNode }) => {
   const [accountTransfer, setAccountTransfer] = useState('');
   const [amount, setAmount] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isError, setIsError] = useState(false);
   const [receiptData, setReceiptData] = useState<any>(null);
 
   return (
@@ -41,6 +44,8 @@ export const TransferProvider = ({ children }: { children: ReactNode }) => {
         setIsModalOpen,
         receiptData,
         setReceiptData,
+        isError,
+        setIsError
       }}
     >
       {children}
