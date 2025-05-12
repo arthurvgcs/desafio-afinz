@@ -8,7 +8,7 @@ interface Props {
 }
 
 export default function BalanceCard({ formattedDate }: Props) {
-  const { balanceVisible, toggleBalanceVisibility } = useBalanceContext();
+  const { balanceVisible, agency, account, balance, toggleBalanceVisibility } = useBalanceContext();
 
   return (
     <div className={styles.balanceCard}>
@@ -19,17 +19,17 @@ export default function BalanceCard({ formattedDate }: Props) {
         </button>
       </div>
       <div className={styles.balanceAmount}>
-        {balanceVisible ? 'R$ {VALOR}' : 'R$ ••••••'}
+        {balanceVisible ? `R$ ${balance}` : 'R$ ••••••'}
       </div>
       <div className={styles.balanceUpdateInfo}>Atualizado em: {formattedDate}</div>
       <div className={styles.accountInfo}>
         <div className={styles.agencyInfo}>
           <span className={styles.infoLabel}>Agência</span>
-          <span className={styles.infoValue}>{'{Agência}'}</span>
+          <span className={styles.infoValue}>{agency}</span>
         </div>
         <div className={styles.agencyInfo}>
           <span className={styles.infoLabel}>Conta</span>
-          <span className={styles.infoValue}>{'{Conta}'}</span>
+          <span className={styles.infoValue}>{account}</span>
         </div>
       </div>
     </div>
