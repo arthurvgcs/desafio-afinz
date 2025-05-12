@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import { useBalanceContext } from '../../context/BalanceContext';
 import { useTransferContext } from '../../context/TransferContext';
+import Spinner from '../../icons/Spinner';
 import { createAccountService } from '../../service/accountService';
 import { axiosHttpClient } from '../../service/axiosHttpClient';
 import { createTransferService } from '../../service/transferService';
@@ -27,10 +29,10 @@ export default function TransferForm() {
     account,
     balance,
   } = useBalanceContext();
-
+  const [isLoading, setIsLoading] = useState(false);
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
+    setIsLoading(true);
     try {
       const accountService = createAccountService(axiosHttpClient);
       const accountResponse = await accountService.consultAgencyAndAccount(Number(agencyTransfer),
@@ -62,6 +64,8 @@ export default function TransferForm() {
         error.response?.data?.message || "Erro ao validar conta ou transferir"
       );
       setIsError(true);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -154,7 +158,7 @@ export default function TransferForm() {
           {amountError && <p className={styles.errorText}>{amountError}</p>}
         </div>
         <div className={styles.formActions}>
-          <button type="submit" className={styles.transferButton} disabled={!isFormValid}>Transferir</button>
+          <button type="submit" className={styles.transferButton} disabled={!isFormValid || isLoading}>{isLoading ? <Spinner/> : 'Transferir'}</button>
         </div>
       </form>
       <ReceiptDrawer
