@@ -1,16 +1,17 @@
+import { useTransferContext } from '../../context/TransferContext';
 import styles from './ErrorModal.module.css';
 
 interface ErrorModalProps {
   isOpen: boolean;
-  message: string;
   onClose: () => void;
 }
 
 const ErrorModal:React.FC<ErrorModalProps> = ({ 
   isOpen, 
-  onClose, 
-  message
+  onClose
 }) => {
+
+  const errorMessage = useTransferContext().errorMessage;
 
   if (!isOpen) return null;
 
@@ -22,7 +23,7 @@ const ErrorModal:React.FC<ErrorModalProps> = ({
         </div>
         <div className={styles.content}>
           <h2 className={styles.title}>Erro</h2>
-          <p className={styles.message}>{message}</p>
+          <p className={styles.message}>{errorMessage}</p>
         </div>
         <button className={styles.closeButton} onClick={onClose}>
           Fechar

@@ -8,14 +8,22 @@ interface TransferContextType {
   setAgencyTransfer: (value: string) => void;
   accountTransfer: string;
   setAccountTransfer: (value: string) => void;
-  amount: string;
-  setAmount: (value: string) => void;
+  amount: number;
+  setAmount: (value: number) => void;
   isModalOpen: boolean;
   setIsModalOpen: (value: boolean) => void;
   receiptData: any;
   setReceiptData: (value: any) => void;
   isError: boolean;
   setIsError: (value: boolean) => void;
+  agencyError: string;
+  setAgencyError: (value: string) => void;
+  accountError: string;
+  setAccountError: (value: string) => void;
+  amountError: string;
+  setAmountError: (value: string) => void;
+  errorMessage: string;
+  setErrorMessage: (value: string) => void;
 }
 
 const TransferContext = createContext<TransferContextType | undefined>(undefined);
@@ -24,10 +32,14 @@ export const TransferProvider = ({ children }: { children: ReactNode }) => {
   const [transferType, setTransferType] = useState('TED (Transferência entre contas)');
   const [agencyTransfer, setAgencyTransfer] = useState('');
   const [accountTransfer, setAccountTransfer] = useState('');
-  const [amount, setAmount] = useState('');
+  const [amount, setAmount] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isError, setIsError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const [receiptData, setReceiptData] = useState<any>(null);
+  const [agencyError, setAgencyError] = useState('');
+  const [accountError, setAccountError] = useState('');
+  const [amountError, setAmountError] = useState('');
 
   return (
     <TransferContext.Provider
@@ -45,7 +57,15 @@ export const TransferProvider = ({ children }: { children: ReactNode }) => {
         receiptData,
         setReceiptData,
         isError,
-        setIsError
+        setIsError,
+        agencyError,
+        setAgencyError,
+        accountError,
+        setAccountError,
+        amountError,
+        setAmountError,
+        errorMessage,
+        setErrorMessage,
       }}
     >
       {children}
