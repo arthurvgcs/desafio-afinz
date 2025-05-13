@@ -21,7 +21,7 @@ export default function App() {
         <Tabs />
         {activeTab === 'saldo' && (<>
             <WelcomeSection title={`Bom dia, ${name}`} subtitle="Veja como anda a saúde da sua conta bancária" />
-            <BalanceCard formattedDate={formattedDate} />
+            <BalanceCard isBalancePage={true} formattedDate={formattedDate} />
             </>
         )}
 

@@ -6,9 +6,10 @@ import styles from './BalanceCard.module.css';
 
 interface Props {
   formattedDate: string;
+  isBalancePage?: boolean;
 }
 
-export default function BalanceCard({ formattedDate }: Props) {
+export default function BalanceCard({ formattedDate, isBalancePage }: Props) {
   const { balanceVisible, agency, account, balance, toggleBalanceVisibility } = useBalanceContext();
 
   return (
@@ -20,9 +21,10 @@ export default function BalanceCard({ formattedDate }: Props) {
         </button>
       </div>
       <div className={styles.balanceAmount}>
-        {balanceVisible ? formatCurrencyFromCents(balance) : 'R$ ••••••'}
+        {balanceVisible ? formatCurrencyFromCents(balance) : <div className={styles.hiddenBalance}></div>}
       </div>
       <div className={styles.balanceUpdateInfo}>Atualizado em: {formattedDate}</div>
+      {isBalancePage && (
       <div className={styles.accountInfo}>
         <div className={styles.agencyInfo}>
           <span className={styles.infoLabel}>Agência</span>
@@ -33,6 +35,7 @@ export default function BalanceCard({ formattedDate }: Props) {
           <span className={styles.infoValue}>{account}</span>
         </div>
       </div>
+      )}
     </div>
   );
 }

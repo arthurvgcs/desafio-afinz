@@ -2,8 +2,8 @@
   margin: 0 24px;
   background-color: white;
   width: 30%;
-  border-radius: 8px;
-  padding: 20px;
+  border-radius: 16px;
+  padding: 24px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
@@ -11,12 +11,12 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 12px;
 }
 
 .balanceLabel {
-  font-size: 14px;
-  color: #555;
+  color: #657A95;
+  font-size: 16px;
+  font-weight: 600;
 }
 
 .visibilityToggle {
@@ -28,21 +28,22 @@
 
 .balanceAmount {
   font-size: 24px;
-  font-weight: 600;
+  font-weight: 700;
   color: #333;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .balanceUpdateInfo {
-  font-size: 11px;
-  color: #888;
-  margin-bottom: 16px;
+  color: #657A95;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: normal;
 }
 
 .accountInfo {
   display: flex;
-  border-top: 1px solid #eee;
-  padding-top: 16px;
+  justify-content: space-between;
+  margin-top: 16px;
 }
 
 .agencyInfo {
@@ -52,12 +53,20 @@
 }
 
 .infoLabel {
+  color: #657A95;
   font-size: 12px;
-  color: #777;
-  margin-bottom: 4px;
+  font-weight: 400;
 }
 
 .infoValue {
-  font-size: 14px;
-  color: #555;
+  color: #657A95;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.hiddenBalance {
+  width: 208px;
+  height: 6px;
+  border-radius: 8px;
+  background: rgba(0, 197, 203, 0.30);
 }
