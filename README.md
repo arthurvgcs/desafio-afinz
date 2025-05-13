@@ -11,8 +11,8 @@ Aplicação front-end desenvolvida com **React + Vite**, conectada a uma API ext
 - [Node.js 22.15.0](https://nodejs.org/en/)
 - [TypeScript](https://www.typescriptlang.org/)
 - [Axios](https://axios-http.com/)
-- [React Context API](https://reactjs.org/docs/context.html)
-- [Jest + React Testing Library](https://testing-library.com/)
+- [React Context API](https://react.dev/learn/passing-data-deeply-with-context)
+- [Jest + React Testing Library](https://jestjs.io/pt-BR/docs/getting-started)
 - [CSS Modules](https://github.com/css-modules/css-modules)
 - Outros pacotes conforme dependências no `package.json`
 
