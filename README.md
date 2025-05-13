@@ -93,10 +93,3 @@ Este projeto possui setup inicial para testes. Para rodar os testes:
 ```bash
 npm run test
 ```
----
-
-## 🛠️ Possíveis melhorias futuras
-
-* Implementação de testes com cobertura completa
-* Adição de gerenciamento de rotas com `react-router-dom`
-* Criação de layout por feature/module
