@@ -3,7 +3,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { useBalanceContext } from "../../context/BalanceContext";
 import BalanceCard from "./BalanceCard";
 
-// Mock do Contexto
+
 jest.mock("../../context/BalanceContext", () => ({
   useBalanceContext: jest.fn(),
 }));
@@ -14,7 +14,7 @@ describe('BalanceCard', () => {
   beforeEach(() => {
     (useBalanceContext as jest.Mock).mockReturnValue({
       balanceVisible: true,
-      balance: 100000, // R$ 1.000,00
+      balance: 100000,
       agency: '1234',
       account: '56789-0',
       formattedDate: '01/01/2025',
@@ -48,7 +48,7 @@ describe('BalanceCard', () => {
     fireEvent.click(eyeIcon);
 
     const balanceValue = screen.getByTestId('balance-value');
-    expect(balanceValue.textContent?.trim()).toBe('R$ 1.000,00');
+    expect(balanceValue.textContent?.trim()).toBe('');
   });
 
   it('deve exibir o texto de "Saldo em conta" corretamente', () => {

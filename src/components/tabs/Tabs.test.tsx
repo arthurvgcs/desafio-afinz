@@ -1,8 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import { TabProvider } from '../../context/TabContext'; // Altere o caminho conforme necessário
-import Tabs from './Tabs'; // Altere o caminho conforme necessário
+import { TabProvider } from '../../context/TabContext';
+import Tabs from './Tabs';
 
-// Função para renderizar o componente com o contexto
 const renderWithContext = () => {
   return render(
     <TabProvider>

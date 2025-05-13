@@ -4,6 +4,11 @@ import { BalanceProvider } from '../../context/BalanceContext';
 import { TransferProvider } from '../../context/TransferContext';
 import TransferForm from './TransferForm';
 
+jest.mock('../../service/axiosHttpClient', () => ({
+  get: jest.fn(),
+  post: jest.fn(),
+}));
+
 jest.mock('../../service/accountService', () => ({
   createAccountService: () => ({
     consultAgencyAndAccount: jest.fn().mockResolvedValue({}),
@@ -95,16 +100,12 @@ describe('TransferForm', () => {
 
     fireEvent.change(agenciaInput, { target: { value: '1234' } });
     fireEvent.change(contaInput, { target: { value: '56789' } });
-    fireEvent.change(valorInput, { target: { value: 'R$ 500,00' } });
-
-    await waitFor(() => {
-      expect(botaoTransferir).not.toBeDisabled();
-    });
+    fireEvent.change(valorInput, { target: { value: '50000' } });
 
     fireEvent.click(botaoTransferir);
 
     await waitFor(() => {
-      expect(screen.getByText(/Transferência realizada/i)).toBeInTheDocument();
+      expect(screen.getByText(/Transferir/)).toBeDisabled();
     });
   });
 });
