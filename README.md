@@ -42,8 +42,6 @@ A Context API foi uma das ferramentas que mais contribuiu para essa organizaçã
 
 No fim, a decisão de manter a arquitetura enxuta não foi por falta de conhecimento dos padrões mais robustos, mas sim por entendimento do contexto. Um projeto simples não precisa ser complicado. O objetivo aqui foi entregar uma base sólida, organizada e que possa evoluir naturalmente conforme o projeto cresce.
 
-Perfeito! Aqui está o restante do `README.md` completo com as seções essenciais após a **Motivação da Arquitetura**:
-
 ---
 
 ## 🚀 Como rodar o projeto
