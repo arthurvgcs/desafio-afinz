@@ -14,7 +14,7 @@
 }
 
 .balanceLabel {
-  color: #657A95;
+  color: #657a95;
   font-size: 16px;
   font-weight: 600;
 }
@@ -34,7 +34,7 @@
 }
 
 .balanceUpdateInfo {
-  color: #657A95;
+  color: #657a95;
   font-size: 12px;
   font-weight: 400;
   line-height: normal;
@@ -53,13 +53,13 @@
 }
 
 .infoLabel {
-  color: #657A95;
+  color: #657a95;
   font-size: 12px;
   font-weight: 400;
 }
 
 .infoValue {
-  color: #657A95;
+  color: #657a95;
   font-size: 16px;
   font-weight: 700;
 }
@@ -68,17 +68,19 @@
   width: 208px;
   height: 6px;
   border-radius: 8px;
-  background: rgba(0, 197, 203, 0.30);
+  background: rgba(0, 197, 203, 0.3);
 }
 
-.balanceLoading .accountLoading {
+.balanceLoading,
+.accountLoading {
   text-align: center;
   padding: 20px;
   color: #555;
   font-style: italic;
 }
 
-.balanceError .accountError {
+.balanceError,
+.accountError {
   text-align: center;
   padding: 20px;
   color: #d32f2f;
