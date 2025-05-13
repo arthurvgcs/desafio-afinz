@@ -1,54 +1,104 @@
-# React + TypeScript + Vite
+# 🧠 Desafio Afinz App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicação front-end desenvolvida com **React + Vite**, conectada a uma API externa. Este projeto foi desenvolvido com foco em desempenho, escalabilidade e facilidade de manutenção, utilizando as melhores práticas do ecossistema React.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Tecnologias Utilizadas
 
-## Expanding the ESLint configuration
+- [React 18+](https://reactjs.org/)
+- [Vite](https://vitejs.dev/)
+- [Node.js 22.15.0](https://nodejs.org/en/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Axios](https://axios-http.com/)
+- [React Context API](https://reactjs.org/docs/context.html)
+- [Jest + React Testing Library](https://testing-library.com/)
+- [CSS Modules](https://github.com/css-modules/css-modules)
+- Outros pacotes conforme dependências no `package.json`
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## 🏗️ Arquitetura do Projeto
+
+```bash
+src/
+├── components/        # Componentes reutilizáveis
+├── context/           # Providers e lógica de contexto (Context API)
+├── hooks/             # Custom hooks
+├── icons/             # Componentes de ícones (mini Design System)
+├── service/           # Comunicação com a API (Axios)
+├── utils/             # Funções utilitárias
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🔎 Motivação da Arquitetura
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+A arquitetura escolhida para este projeto reflete diretamente a forma como eu penso e atuo como desenvolvedor: fazer o simples, bem feito.
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+Desde o início, ficou claro que o aplicativo tinha um escopo direto e não exigia uma estrutura complexa ou altamente formalizada. Por isso, optei por uma arquitetura limpa, intuitiva e de fácil manutenção, focada na clareza e na escalabilidade, sem "firulas" ou abstrações desnecessárias.
+
+Ao invés de seguir fielmente uma única literatura ou padrão arquitetural (como MVC, MVVM ou Clean Architecture), busquei absorver o que há de melhor em cada um deles e aplicar de forma prática e contextualizada ao universo React. Assim, fui criando uma organização em pastas que fizesse sentido para o projeto, valorizando a separação de responsabilidades e a legibilidade do código.
+
+A Context API foi uma das ferramentas que mais contribuiu para essa organização. Ela permitiu centralizar estados globais de forma eficiente, reduzindo acoplamentos e facilitando a comunicação entre os componentes, o que se alinha bem à ideia de uma ViewModel no padrão MVVM, por exemplo.
+
+No fim, a decisão de manter a arquitetura enxuta não foi por falta de conhecimento dos padrões mais robustos, mas sim por entendimento do contexto. Um projeto simples não precisa ser complicado. O objetivo aqui foi entregar uma base sólida, organizada e que possa evoluir naturalmente conforme o projeto cresce.
+
+Perfeito! Aqui está o restante do `README.md` completo com as seções essenciais após a **Motivação da Arquitetura**:
+
+---
+
+## 🚀 Como rodar o projeto
+
+### ✅ Pré-requisitos
+
+* [Node.js](https://nodejs.org/) versão **22.15.0**
+* [npm](https://www.npmjs.com/) instalado
+
+### 📦 Instalação
+
+1. Clone o repositório:
+
+   ```bash
+   git clone https://github.com/arthurvgcs/desafio-afinz.git
+   cd desafio-afinz
+   ```
+
+2. Instale as dependências:
+
+   ```bash
+   npm install
+   ```
+
+3. Crie o arquivo `.env` com a seguinte variável de ambiente:
+
+   ```env
+   VITE_API_URL=https://interview.mattlabz.tech
+   ```
+
+4. Rode o projeto:
+
+   ```bash
+   npm run dev
+   ```
+
+5. Acesse no navegador:
+
+   ```
+   http://localhost:5173
+   ```
+
+---
+
+## 🧪 Testes
+
+Este projeto possui setup inicial para testes. Para rodar os testes:
+
+```bash
+npm run test
 ```
+---
+
+## 🛠️ Possíveis melhorias futuras
+
+* Implementação de testes com cobertura completa
+* Adição de gerenciamento de rotas com `react-router-dom`
+* Criação de layout por feature/module
