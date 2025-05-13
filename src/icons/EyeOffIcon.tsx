@@ -5,6 +5,7 @@ type Props = {
 
 const EyeOffIcon = ({ size = 16, color = "#313944" }: Props) => (
   <svg
+    data-testid="eye-off-icon"
     xmlns="http://www.w3.org/2000/svg"
     width={size}
     height={size}

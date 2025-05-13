@@ -5,6 +5,7 @@ type Props = {
 
 const IncreasingIcon = ({ size = 16, color = "#00C5CB" }: Props) => (
   <svg
+    data-testid="increasing-icon"
     xmlns="http://www.w3.org/2000/svg"
     width={size}
     height={size}

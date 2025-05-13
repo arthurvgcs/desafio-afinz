@@ -5,6 +5,7 @@ type Props = {
 
 const DocumentIcon = ({ size = 16, color = "#00C5CB" }: Props) => (
   <svg
+    data-testid="document-icon"
     xmlns="http://www.w3.org/2000/svg"
     width={size}
     height={size}

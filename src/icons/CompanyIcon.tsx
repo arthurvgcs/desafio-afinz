@@ -1,5 +1,6 @@
 const CompanyIcon = () => (
   <svg
+    data-testid="company-icon"
     xmlns="http://www.w3.org/2000/svg"
     width="69"
     height="62"

@@ -1,8 +1,8 @@
-import AccountingDollarIcon from '../../icons/AccountingDollarIcon.tsx';
-import CompanyIcon from '../../icons/CompanyIcon.tsx';
-import DocumentIcon from '../../icons/DocumentIcon.tsx';
-import IncreasingIcon from '../../icons/IncreasingIcon.tsx';
-import MoveUpDownIcon from '../../icons/MoveUpDownIcon.tsx';
+import AccountingDollarIcon from '../../icons/AccountingDollarIcon';
+import CompanyIcon from '../../icons/CompanyIcon';
+import DocumentIcon from '../../icons/DocumentIcon';
+import IncreasingIcon from '../../icons/IncreasingIcon';
+import MoveUpDownIcon from '../../icons/MoveUpDownIcon';
 import styles from './Sidebar.module.css';
 
 export default function Sidebar() {

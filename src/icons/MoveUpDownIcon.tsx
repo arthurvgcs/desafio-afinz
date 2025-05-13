@@ -5,6 +5,7 @@ type Props = {
 
 const MoveUpDownIcon = ({ size = 16, color = "#00C5CB" }: Props) => (
   <svg
+    data-testid="move-up-down-icon"
     xmlns="http://www.w3.org/2000/svg"
     width={size}
     height={size}

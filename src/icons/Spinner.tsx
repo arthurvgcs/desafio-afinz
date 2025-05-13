@@ -7,6 +7,7 @@ type Props = {
 const Spinner = ({ size = 10, color = "#fff" }: Props) => {
   return (
     <svg
+      data-testid="spinner-icon"
       className={styles.spinner}
       width={size}
       height={size}

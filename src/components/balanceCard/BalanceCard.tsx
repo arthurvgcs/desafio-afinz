@@ -1,8 +1,8 @@
 import { useBalanceContext } from "../../context/BalanceContext";
-import EyeIcon from "../../icons/EyeIcon.tsx";
-import EyeOffIcon from "../../icons/EyeOffIcon.tsx";
-import Spinner from "../../icons/Spinner.tsx";
-import { formatCurrencyFromCents } from "../../utils/formatCurrency.ts";
+import EyeIcon from "../../icons/EyeIcon";
+import EyeOffIcon from "../../icons/EyeOffIcon";
+import Spinner from "../../icons/Spinner";
+import { formatCurrencyFromCents } from "../../utils/formatCurrency";
 import styles from "./BalanceCard.module.css";
 
 interface Props {
@@ -35,11 +35,11 @@ export default function BalanceCard({ formattedDate, isBalancePage }: Props) {
 
     return (
       <>
-        <div className={styles.balanceAmount}>
+        <div className={styles.balanceAmount} data-testid="balance-value">
           {balanceVisible ? (
             formatCurrencyFromCents(balance)
           ) : (
-            <div className={styles.hiddenBalance} />
+            <div className={styles.hiddenBalance} data-testid="hidden-balance" />
           )}
         </div>
         <div className={styles.balanceUpdateInfo}>
