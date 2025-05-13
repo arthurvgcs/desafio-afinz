@@ -12,6 +12,10 @@ interface BalanceContextType {
   balance: number;
   toggleBalanceVisibility: () => void;
   setBalance: (value: number) => void;
+  loadingBalance: boolean;
+  loadingProfile: boolean;
+  errorBalance: string | null;
+  errorProfile: string | null;
 }
 
 const BalanceContext = createContext<BalanceContextType | undefined>(undefined);
@@ -22,6 +26,12 @@ export const BalanceProvider = ({ children }: { children: ReactNode }) => {
   const [name, setName] = useState('');
   const [agency, setAgency] = useState(0);
   const [account, setAccount] = useState(0);
+  const [loadingBalance, setLoadingBalance] = useState(false);
+  const [loadingProfile, setLoadingProfile] = useState(false);
+  const [errorBalance, setErrorBalance] = useState<string | null>(null);
+  const [errorProfile, setErrorProfile] = useState<string | null>(null);
+
+  const toggleBalanceVisibility = () => setBalanceVisible(!balanceVisible);
 
   async function getProfileInformation() {
     try {
@@ -44,30 +54,43 @@ export const BalanceProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     async function fetchProfile() {
       try {
+        setLoadingProfile(true);
         const profile = await getProfileInformation();
         setName(profile.name);
         setAgency(profile.agency);
         setAccount(profile.account);
-      } catch (error) {
-        console.error('Erro ao buscar perfil:', error);
+      } catch (error: any) {
+        if(error.response?.status === 500) {
+          setErrorProfile('Erro interno do servidor, tente novamente mais tarde');
+          return;
+        }
+        setErrorProfile(error.response?.data?.message || 'Erro ao buscar perfil.');
+      } finally {
+        setLoadingProfile(false);
       }
     }
     fetchProfile();
     async function fetchBalance() {
       try {
+        setLoadingBalance(true);
         const balance = await getBalanceInformation();
         setBalance(balance.balance);
-      } catch (error) {
-        console.error('Erro ao buscar saldo:', error);
+      } catch (error: any) {
+        if(error.response?.status === 500) {
+          setErrorBalance('Erro interno do servidor, tente novamente mais tarde');
+          return;
+        }
+        setErrorBalance(error.response?.data?.message || 'Erro ao buscar saldo. Atualize a página para tentar novamente.');
+      } finally {
+        setLoadingBalance(false);
       }
     }
     fetchBalance();
   }, []);
 
-  const toggleBalanceVisibility = () => setBalanceVisible(!balanceVisible);
 
   return (
-    <BalanceContext.Provider value={{ balanceVisible, agency, name, balance, account, toggleBalanceVisibility, setBalance }}>
+    <BalanceContext.Provider value={{ balanceVisible, agency, name, balance, account, toggleBalanceVisibility, setBalance, loadingBalance, loadingProfile, errorBalance, errorProfile }}>
       {children}
     </BalanceContext.Provider>
   );
