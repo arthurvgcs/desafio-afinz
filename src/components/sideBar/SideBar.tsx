@@ -3,7 +3,7 @@ import CompanyIcon from '../../icons/CompanyIcon';
 import DocumentIcon from '../../icons/DocumentIcon';
 import IncreasingIcon from '../../icons/IncreasingIcon';
 import MoveUpDownIcon from '../../icons/MoveUpDownIcon';
-import styles from './Sidebar.module.css';
+import styles from './SideBar.module.css';
 
 export default function Sidebar() {
   return (
