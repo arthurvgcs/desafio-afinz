@@ -1,3 +1,4 @@
+import { AxiosError } from "axios";
 import { useCallback, useEffect, useState } from "react";
 
 export function useFetch<T>(asyncFunction: () => Promise<T>) {
@@ -11,16 +12,20 @@ export function useFetch<T>(asyncFunction: () => Promise<T>) {
     try {
       const result = await asyncFunction();
       setData(result);
-    } catch (err: any) {
-      if (err?.response?.status === 500) {
-        setError(
-          "Erro interno do servidor. Atualize a página para tentar novamente."
-        );
+    } catch (err: unknown) {
+      if (err instanceof AxiosError) {
+        if (err?.response?.status === 500) {
+          setError(
+            "Erro interno do servidor. Atualize a página para tentar novamente."
+          );
+          return;
+        }
+        const message =
+          err?.response?.data?.message || err?.message || "Erro desconhecido.";
+        setError(message);
         return;
       }
-      const message =
-        err?.response?.data?.message || err?.message || "Erro desconhecido.";
-      setError(message);
+      setError("Erro desconhecido. Tente novamente mais tarde.");
     } finally {
       setLoading(false);
     }

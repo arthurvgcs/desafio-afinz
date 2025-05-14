@@ -1,69 +1,36 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
-import React from 'react';
-import { BalanceProvider } from '../../context/BalanceContext';
-import { TransferProvider } from '../../context/TransferContext';
-import TransferForm from './TransferForm';
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import React from "react";
+import { BalanceProvider } from "../../context/BalanceContext";
+import { TransferProvider } from "../../context/TransferContext";
+import TransferForm from "./TransferForm";
 
-jest.mock('../../service/axiosHttpClient', () => ({
+jest.mock("../../service/axiosHttpClient", () => ({
   get: jest.fn(),
   post: jest.fn(),
 }));
 
-jest.mock('../../service/accountService', () => ({
+jest.mock("../../service/accountService", () => ({
   createAccountService: () => ({
     consultAgencyAndAccount: jest.fn().mockResolvedValue({}),
   }),
 }));
 
-jest.mock('../../service/transferService', () => ({
+jest.mock("../../service/transferService", () => ({
   createTransferService: () => ({
-    transfer: jest.fn().mockResolvedValue({ status: 'APPROVED' }),
+    transfer: jest.fn().mockResolvedValue({ status: "APPROVED" }),
   }),
 }));
 
 const renderWithContexts = (ui: React.ReactElement) => {
-  const balanceContextValue = {
-    agency: '1234',
-    account: '56789',
-    balance: 100000,
-    setBalance: jest.fn(),
-  };
-
-  const transferContextValue = {
-    transferType: 'TED (Transferência entre contas)',
-    setTransferType: jest.fn(),
-    agencyTransfer: '',
-    setAgencyTransfer: jest.fn(),
-    accountTransfer: '',
-    setAccountTransfer: jest.fn(),
-    amount: 0,
-    setAmount: jest.fn(),
-    isModalOpen: false,
-    setIsModalOpen: jest.fn(),
-    receiptData: null,
-    setReceiptData: jest.fn(),
-    isError: false,
-    setIsError: jest.fn(),
-    agencyError: '',
-    setAgencyError: jest.fn(),
-    accountError: '',
-    setAccountError: jest.fn(),
-    amountError: '',
-    setAmountError: jest.fn(),
-    setErrorMessage: jest.fn(),
-  };
-
   return render(
     <BalanceProvider>
-      <TransferProvider>
-        {ui}
-      </TransferProvider>
+      <TransferProvider>{ui}</TransferProvider>
     </BalanceProvider>
   );
 };
 
-describe('TransferForm', () => {
-  test('deve renderizar o formulário corretamente', () => {
+describe("TransferForm", () => {
+  test("deve renderizar o formulário corretamente", () => {
     renderWithContexts(<TransferForm />);
     expect(screen.getByLabelText(/Agência/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Conta/i)).toBeInTheDocument();
@@ -71,36 +38,42 @@ describe('TransferForm', () => {
     expect(screen.getByText(/Transferir/i)).toBeDisabled();
   });
 
-  test('deve validar os campos de agência e conta', () => {
+  test("deve validar os campos de agência e conta", () => {
     renderWithContexts(<TransferForm />);
     const agenciaInput = screen.getByLabelText(/Agência/i);
     const contaInput = screen.getByLabelText(/Conta/i);
 
-    fireEvent.change(agenciaInput, { target: { value: '12' } });
-    expect(screen.getByText(/A agência deve ter exatamente 4 dígitos/i)).toBeInTheDocument();
+    fireEvent.change(agenciaInput, { target: { value: "12" } });
+    expect(
+      screen.getByText(/A agência deve ter exatamente 4 dígitos/i)
+    ).toBeInTheDocument();
 
-    fireEvent.change(contaInput, { target: { value: '123' } });
-    expect(screen.getByText(/A conta deve ter 4 ou 5 dígitos/i)).toBeInTheDocument();
+    fireEvent.change(contaInput, { target: { value: "123" } });
+    expect(
+      screen.getByText(/A conta deve ter 4 ou 5 dígitos/i)
+    ).toBeInTheDocument();
   });
 
-  test('deve validar o campo de valor', () => {
+  test("deve validar o campo de valor", () => {
     renderWithContexts(<TransferForm />);
     const valorInput = screen.getByLabelText(/Valor/i);
 
-    fireEvent.change(valorInput, { target: { value: 'R$ 2.000,00' } });
-    expect(screen.getByText(/Valor maior que o saldo disponível/i)).toBeInTheDocument();
+    fireEvent.change(valorInput, { target: { value: "R$ 2.000,00" } });
+    expect(
+      screen.getByText(/Valor maior que o saldo disponível/i)
+    ).toBeInTheDocument();
   });
 
-  test('deve permitir submissão com dados válidos', async () => {
+  test("deve permitir submissão com dados válidos", async () => {
     renderWithContexts(<TransferForm />);
     const agenciaInput = screen.getByLabelText(/Agência/i);
     const contaInput = screen.getByLabelText(/Conta/i);
     const valorInput = screen.getByLabelText(/Valor/i);
     const botaoTransferir = screen.getByText(/Transferir/i);
 
-    fireEvent.change(agenciaInput, { target: { value: '1234' } });
-    fireEvent.change(contaInput, { target: { value: '56789' } });
-    fireEvent.change(valorInput, { target: { value: '50000' } });
+    fireEvent.change(agenciaInput, { target: { value: "1234" } });
+    fireEvent.change(contaInput, { target: { value: "56789" } });
+    fireEvent.change(valorInput, { target: { value: "50000" } });
 
     fireEvent.click(botaoTransferir);
 

@@ -1,5 +1,17 @@
-import type { ReactNode } from 'react';
-import { createContext, useContext, useState } from 'react';
+import type { ReactNode } from "react";
+import { createContext, useContext, useState } from "react";
+
+export type ReceiptData = {
+  newBalance: string | number;
+  status: string;
+  date: string;
+  time: string;
+  agency: string;
+  account: string;
+  amount: string | number;
+  sourceAccount: string | number;
+  sourceAgency: string | number;
+};
 
 interface TransferContextType {
   transferType: string;
@@ -12,8 +24,8 @@ interface TransferContextType {
   setAmount: (value: number) => void;
   isModalOpen: boolean;
   setIsModalOpen: (value: boolean) => void;
-  receiptData: any;
-  setReceiptData: (value: any) => void;
+  receiptData: ReceiptData;
+  setReceiptData: (value: ReceiptData) => void;
   isError: boolean;
   setIsError: (value: boolean) => void;
   agencyError: string;
@@ -26,20 +38,26 @@ interface TransferContextType {
   setErrorMessage: (value: string) => void;
 }
 
-const TransferContext = createContext<TransferContextType | undefined>(undefined);
+const TransferContext = createContext<TransferContextType | undefined>(
+  undefined
+);
 
 export const TransferProvider = ({ children }: { children: ReactNode }) => {
-  const [transferType, setTransferType] = useState('TED (Transferência entre contas)');
-  const [agencyTransfer, setAgencyTransfer] = useState('');
-  const [accountTransfer, setAccountTransfer] = useState('');
+  const [transferType, setTransferType] = useState(
+    "TED (Transferência entre contas)"
+  );
+  const [agencyTransfer, setAgencyTransfer] = useState("");
+  const [accountTransfer, setAccountTransfer] = useState("");
   const [amount, setAmount] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isError, setIsError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
-  const [receiptData, setReceiptData] = useState<any>(null);
-  const [agencyError, setAgencyError] = useState('');
-  const [accountError, setAccountError] = useState('');
-  const [amountError, setAmountError] = useState('');
+  const [errorMessage, setErrorMessage] = useState("");
+  const [receiptData, setReceiptData] = useState<ReceiptData>(
+    {} as ReceiptData
+  );
+  const [agencyError, setAgencyError] = useState("");
+  const [accountError, setAccountError] = useState("");
+  const [amountError, setAmountError] = useState("");
 
   return (
     <TransferContext.Provider
@@ -75,6 +93,9 @@ export const TransferProvider = ({ children }: { children: ReactNode }) => {
 
 export const useTransferContext = () => {
   const context = useContext(TransferContext);
-  if (!context) throw new Error('O useTransferContext deve ser usado dentro de um TransferProvider');
+  if (!context)
+    throw new Error(
+      "O useTransferContext deve ser usado dentro de um TransferProvider"
+    );
   return context;
 };

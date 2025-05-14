@@ -1,3 +1,4 @@
+import { AxiosError } from "axios";
 import { useState } from "react";
 import { useBalanceContext } from "../../context/BalanceContext";
 import { useTransferContext } from "../../context/TransferContext";
@@ -66,14 +67,23 @@ export default function TransferForm() {
         sourceAgency: agency,
       });
       setIsModalOpen(true);
-    } catch (error: any) {
-      if (error.response?.status === 500) {
-        setErrorMessage("Erro interno do servidor, tente novamente mais tarde");
+    } catch (error: unknown) {
+      if (error instanceof AxiosError) {
+        if (error.response?.status === 500) {
+          setErrorMessage(
+            "Erro interno do servidor, tente novamente mais tarde"
+          );
+          setIsError(true);
+          return;
+        }
+        setErrorMessage(
+          error.response?.data?.message || "Erro ao validar conta ou transferir"
+        );
         setIsError(true);
         return;
       }
       setErrorMessage(
-        error.response?.data?.message || "Erro ao validar conta ou transferir"
+        "Erro ao validar conta ou transferir, tente novamente mais tarde"
       );
       setIsError(true);
     } finally {
@@ -81,7 +91,7 @@ export default function TransferForm() {
     }
   };
 
-  const handleAgencyChange = (e: any) => {
+  const handleAgencyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     if (value === "" || /^\d+$/.test(value)) {
       setAgencyTransfer(value);
@@ -93,7 +103,7 @@ export default function TransferForm() {
     }
   };
 
-  const handleAccountChange = (e: any) => {
+  const handleAccountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
 
     if (value === "" || /^\d+$/.test(value)) {
@@ -106,7 +116,7 @@ export default function TransferForm() {
     }
   };
 
-  const handleAmountChange = (e: any) => {
+  const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const rawValue = e.target.value.replace(/\D/g, "");
     const numericValue = parseInt(rawValue || "0", 10);
     if (numericValue > balance) {
